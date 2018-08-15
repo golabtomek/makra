@@ -1,0 +1,76 @@
+Sub Organize()
+
+Dim RiskMarketList
+RiskMarketList = Array("AE", "BH", "BR", "BW", "ES", "GH", "GR", "HK", "ID", "JO", "KR", "NY", "NG", "SG", "QA", "TH", "TW", "KE")
+
+Dim RowCounter As Integer
+RowCounter = 2
+
+Dim CurrentRow As Integer
+CurrentRow = 2
+
+Dim IsCurrentRowEmpty As Boolean
+IsCurrentRowEmpty = False
+
+'Sortowanie po Marketach
+
+Do While IsCurrentRowEmpty = False
+   For i = 0 To UBound(RiskMarketList)
+       If Cells(CurrentRow, 11).Value = RiskMarketList(i) Then
+           If RowCounter <> CurrentRow Then
+               Rows(CurrentRow).Cut
+               Rows(RowCounter).Insert
+           End If
+           RowCounter = RowCounter + 1
+           Exit For
+       End If
+   Next i
+
+   CurrentRow = CurrentRow + 1
+   If Application.CountA(Rows(CurrentRow).EntireRow) = 0 Then
+       IsCurrentRowEmpty = True
+       Rows(RowCounter).Insert
+       Rows(RowCounter).Interior.Color = 5296274
+   End If
+Loop
+
+'Koniec sortowania po marketach
+
+'Sortowanie po settlement date (risk markety)
+
+Range("O2", "O" & CInt(RowCounter - 1)).Sort key1:=Range("O2"), order1:=xlAscending
+
+'Koniec sortowania po settlement date (risk markety)
+
+'Sortowanie po unitach
+IsCurrentRowEmpty = False
+CurrentRow = RowCounter + 1
+RowCounter = RowCounter + 1
+Dim UnitSortFirstRow As Integer
+UnitSortFirstRow = RowCounter
+
+Do While IsCurrentRowEmpty = False
+   If (Cells(CurrentRow, 13).Value > 10000000) Then
+        If RowCounter <> CurrentRow Then
+               Rows(CurrentRow).Cut
+               Rows(RowCounter).Insert
+        End If
+        RowCounter = RowCounter + 1
+   End If
+        
+   CurrentRow = CurrentRow + 1
+   
+   If Application.CountA(Rows(CurrentRow).EntireRow) = 0 Then
+       IsCurrentRowEmpty = True
+       Rows(RowCounter).Insert
+       Rows(RowCounter).Interior.Color = RGB(255, 15, 15)
+   End If
+Loop
+
+'Koniec sortowania po unitach
+'Sortowanie po settlement date (unity)
+
+Range("M" & CInt(UnitSortFirstRow), "O" & CInt(RowCounter - 1)).Sort key1:=Range("O2"), order1:=xlAscending
+
+'Koniec sortowania po settlement date (unity)
+End Sub
