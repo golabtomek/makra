@@ -1,0 +1,84 @@
+Sub Organize()
+
+Dim RiskMarketList
+RiskMarketList = Array("AE", "BH", "BR", "BW", "ES", "GH", "GR", "HK", "ID", "JO", "KR", "NY", "NG", "SG", "QA", "TH", "TW", "KE")
+
+Dim RowCounter As Integer
+RowCounter = 2
+
+Dim CurrentRow As Integer
+CurrentRow = 2
+
+Dim IsCurrentRowEmpty As Boolean
+IsCurrentRowEmpty = False
+
+'Sortowanie po Marketach
+
+Do While IsCurrentRowEmpty = False
+   For i = 0 To UBound(RiskMarketList)
+       If Cells(CurrentRow, 11).Value = RiskMarketList(i) Then
+           Rows(CurrentRow).Interior.Color = RGB(204, 190, 226)
+           RowCounter = RowCounter + 1
+           Exit For
+       End If
+   Next i
+
+   CurrentRow = CurrentRow + 1
+   If Application.CountA(Rows(CurrentRow).EntireRow) = 0 Then
+       IsCurrentRowEmpty = True
+   End If
+Loop
+
+'Koniec sortowania po marketach
+
+'Sortowanie po unitach
+IsCurrentRowEmpty = False
+CurrentRow = RowCounter + 1
+RowCounter = RowCounter + 1
+Dim UnitSortFirstRow As Integer
+UnitSortFirstRow = RowCounter
+
+Do While IsCurrentRowEmpty = False
+   If (Cells(CurrentRow, 13).Value > 10000000) Then
+        Rows(CurrentRow).Interior.Color = RGB(204, 225, 206)
+        RowCounter = RowCounter + 1
+   End If
+        
+   CurrentRow = CurrentRow + 1
+   
+   If Application.CountA(Rows(CurrentRow).EntireRow) = 0 Then
+       IsCurrentRowEmpty = True
+   End If
+Loop
+
+'Koniec sortowania po unitach
+
+'sortowanie pozostalych po dacie
+
+CurrentRow = RowCounter + 1
+RowCounter = RowCounter + 1
+Dim DateSortFirstRow As Integer
+DateSortFirstRow = RowCounter
+
+    IsCurrentRowEmpty = False
+    
+    Do While IsCurrentRowEmpty = False
+        Dim CurrentDate As Date
+        CurrentDate = Date
+        Dim SettlementDate As Date
+        SettlementDate = DateValue(Cells(CurrentRow, 15).Value)
+        
+        If SettlementDate = CurrentDate Then
+            Rows(CurrentRow).Interior.Color = RGB(254, 225, 206)
+            RowCounter = RowCounter + 1
+        End If
+        
+        CurrentRow = CurrentRow + 1
+   
+        If Application.CountA(Rows(CurrentRow).EntireRow) = 0 Then
+            IsCurrentRowEmpty = True
+        End If
+    Loop
+'koniec sortowania
+End Sub
+
