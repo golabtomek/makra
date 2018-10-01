@@ -115,7 +115,7 @@ End Sub
 Public Function CONVERT_YYYYMMDD_TO_DATE(rng As Range) As Date
     Dim strText As String
 
-    strText = rng.Text
+    strText = rng
 
     CONVERT_YYYYMMDD_TO_DATE = DateSerial(Left(strText, 4), _
                                           Mid(strText, 5, 2), _
