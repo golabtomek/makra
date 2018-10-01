@@ -89,7 +89,7 @@ For i = 0 To 3
         Dim CurrentDate As Date
         CurrentDate = Date
         Dim SettlementDate As Date
-        SettlementDate = DateValue(Cells(CurrentRow, 15).Value)
+        SettlementDate = DateValue(CONVERT_YYYYMMDD_TO_DATE(Cells(CurrentRow, 15).Value))
         Dim SearchDate As Date
         SearchDate = DateAdd("d", i, CurrentDate)
         
@@ -111,3 +111,13 @@ Next i
 'koniec sortowania
 End Sub
 
+
+Public Function CONVERT_YYYYMMDD_TO_DATE(rng As Range) As Date
+    Dim strText As String
+
+    strText = rng.Text
+
+    CONVERT_YYYYMMDD_TO_DATE = DateSerial(Left(strText, 4), _
+                                          Mid(strText, 5, 2), _
+                                          Right(strText, 2))
+End Function
