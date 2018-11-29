@@ -109,6 +109,13 @@ For i = 0 To 3
     Loop
 Next i
 'koniec sortowania
+
+'sortowanie pozostalych dat
+
+Range("O" & CInt(RowCounter), "O" & CInt(CurrentRow)).Sort Key1:=Range("O" & CInt(RowCounter)), Order1:=xlAscending
+
+'koniec
+
 End Sub
 
 
