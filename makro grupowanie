@@ -105,6 +105,9 @@ For i = 0 To 3
    
         If Application.CountA(Rows(CurrentRow).EntireRow) = 0 Then
             IsCurrentRowEmpty = True
+            Rows(RowCounter).Insert
+            Rows(RowCounter).Interior.Color = RGB(255, 15, 15)
+            RowCounter = RowCounter + 1
         End If
     Loop
 Next i
